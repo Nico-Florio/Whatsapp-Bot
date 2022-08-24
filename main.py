@@ -1,90 +1,90 @@
-import pyautogui
+import tkinter
 import pywhatkit
+import pyautogui
 import os
 
 
 def cls():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name=='nt' else 'clear')
 
 
-def validar_opcion():
-    ok: bool = False
-    while not ok:
-        try:
-            opcion = int(input("Ingrese una opcion: "))
-            if 0 < opcion < 5:
-                ok = True
-                return opcion
-            else:
-                raise ValueError
-        except ValueError:
-            print("Opcion invalida")
-            ok = False
+def accion_boton1(entrada1, entrada2, entrada3, ventana):
+    mensaje = entrada1.get()
+    veces = int(entrada2.get())
+    numero = entrada3.get()
+    ventana.destroy()
 
-
-def mensaje_custom():
     cls()
-    cerrar: bool = False
-    while not cerrar:
-        mensaje: str = input("Ingrese el mensaje a enviar antes del spam: ")
-        mensaje_a_enviar: str = input("Ingrese el mensaje a enviar: ")
-        cantidad_de_mensajes: int = int(input("Ingrese la cantidad de mensajes a enviar: "))
-        num_de_telefono = int(input("Ingrese el numero de telefono (11...): "))
-        cls()
-        num_de_telefono = "+54" + str(num_de_telefono)
-        pywhatkit.sendwhatmsg_instantly(num_de_telefono, mensaje)
-        for i in range(cantidad_de_mensajes):
-            pyautogui.write(mensaje_a_enviar)
-            pyautogui.press("enter")
+    numero = "+54" + str(numero)
+    pywhatkit.sendwhatmsg_instantly(numero, mensaje)
+    for i in range(veces):
+        pyautogui.write(mensaje)
+        pyautogui.press("enter")
+
+    exit()
 
 
-def elefantes():
-    cls()
-    cerrar = False
-    while not cerrar:
-        mensaje: str = input("Ingrese el mensaje a enviar antes del spam: ")
-        cantidad_de_mensajes: int = int(input("Ingrese la cantidad de mensajes a enviar: "))
-        num_de_telefono = int(input("Ingrese el numero de telefono (11...): "))
-        cls()
-        num_de_telefono = "+54" + str(num_de_telefono)
-        pywhatkit.sendwhatmsg_instantly(num_de_telefono, mensaje)
-        for i in range(cantidad_de_mensajes):
-            pyautogui.write(str(i + 1) + " elefantes se balanceaban sobre la tela de una arana")
-            pyautogui.press("enter")
-            pyautogui.write("como veian que resistian fueron a llamar a otro elefante ")
-            pyautogui.press("enter")
+def boton1(ventanaa):
+    ventanaa.destroy()
+    ventana = tkinter.Tk()
+    ventana.title("Mensaje random")
+    ventana.geometry("400x350")
+    ventana.config(bg="grey")
+    #poner 3 entradas de texto
+    texto = tkinter.Label(ventana, text="Spam a contacto", font=("Arial", 15), bg="grey")
+    texto.pack()
+    #poner un texto
+    texto = tkinter.Label(ventana, text="Ingrese el mensaje a spamear", font=("Arial", 10), bg="grey")
+    texto.pack()
+
+    entrada1 = tkinter.Entry(ventana, width=30, font=("Arial", 10), bg="white")
+    entrada1.pack()
+    #poner un texto
+    texto = tkinter.Label(ventana, text="Ingrese el numero de veces a spamear", font=("Arial", 10), bg="grey")
+    texto.pack()
+    entrada2 = tkinter.Entry(ventana, width=30, font=("Arial", 10), bg="white")
+    entrada2.pack()
+    #poner un texto
+    texto = tkinter.Label(ventana, text="Ingrese el numero de telefono (formato 11...)", font=("Arial", 10), bg="grey")
+    texto.pack()
+    entrada3 = tkinter.Entry(ventana, width=30, font=("Arial", 10), bg="white")
+    entrada3.pack()
+    #poner un boton
+    texto = tkinter.Label(ventana, text="", font=("Arial", 10), bg="grey")
+    texto.pack()
+    boton = tkinter.Button(ventana, text="Enviar", font=("Arial", 20), bg="white", command=lambda: accion_boton1
+    (entrada1, entrada2, entrada3, ventana))
+    boton.pack()
+    ventana.mainloop()
 
 
-def imagen():
-    pass
+def menu():
+    ventana = tkinter.Tk()
+    ventana.title("Whatsapp bot by @_nicoflorio")
+    ventana.geometry("500x380")
+    ventana.config(bg="grey")
+    #poner un texto
+    texto = tkinter.Label(ventana, text="Whatsapp bot by @_nicoflorio", font=("Arial", 20), bg="grey")
+    texto.pack()
+    texto = tkinter.Label(ventana, text="", font=("Arial", 10), bg="grey")
+    texto.pack()
+    #poner un boton
+    boton_1 = tkinter.Button(ventana, text="Spam a contacto", font=("Arial", 18), bg="white",
+                             command=lambda: boton1(ventana))
+    boton_1.pack()
+    texto = tkinter.Label(ventana, text="", font=("Arial", 10), bg="grey")
+    texto.pack()
+    boton_2 = tkinter.Button(ventana, text="Spam a grupo", font=("Arial", 18), bg="white",
+                             command=lambda: boton1(ventana))
+    boton_2.pack()
+    texto = tkinter.Label(ventana, text="(proximamente)", font=("Arial", 8), bg="grey")
+    texto.pack()
+    boton_3 = tkinter.Button(ventana, text="Spam de fotos", font=("Arial", 18), bg="white",
+                             command=lambda: boton1(ventana))
+    boton_3.pack()
+    texto = tkinter.Label(ventana, text="(proximamente)", font=("Arial", 8), bg="grey")
+    texto.pack()
 
+    ventana.mainloop()
 
-def main():
-    cls()
-    cerrar: bool = False
-    while not cerrar:
-        print("""
-        #############################################################
-        #############################################################
-        ############### Whatsapp spam by @_nicoflorio ###############
-        #############################################################
-        #############################################################
-        
-        MENU:
-        [1] Mensaje custom
-        [2] Elefantes
-        [3] Imagen
-        [4] Salir
-        """)
-        opcion = validar_opcion()
-        if opcion == 1:
-            mensaje_custom()
-        elif opcion == 2:
-            elefantes()
-        elif opcion == 3:
-            imagen()
-        else:
-            cerrar = True
-
-
-main()
+menu()
